@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1709145715142,
+      "tag": "0000_tranquil_bill_hollister",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1709145941698,
+      "tag": "0001_elite_marten_broadcloak",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1709151187453,
+      "tag": "0002_crazy_makkari",
+      "breakpoints": true
+    }
+  ]
+}
