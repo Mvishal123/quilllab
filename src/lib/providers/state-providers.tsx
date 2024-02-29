@@ -99,7 +99,6 @@ export default AppStateProvider;
 
 export const useAppState = () => {
   const context = useContext(AppStateContext);
-  console.log({context});
   
   if (!context) {
     throw new Error("useAppState must be used within an AppStateProvider");

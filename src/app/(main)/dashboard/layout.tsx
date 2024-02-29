@@ -4,7 +4,7 @@ import React, { PropsWithChildren } from "react";
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <div>
-      <AppStateProvider>{children}</AppStateProvider>{" "}
+      <AppStateProvider>{children}</AppStateProvider>
     </div>
   );
 };
