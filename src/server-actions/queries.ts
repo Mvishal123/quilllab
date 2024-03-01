@@ -64,7 +64,17 @@ export const getPrivateWorkspaces = async (userId: string) => {
 
   //No collaborators are included
   const privateWorkspaces = await db
-    .select()
+    .select({
+      id: workspaces.id,
+      createdAt: workspaces.createdAt,
+      workspaceOwner: workspaces.workspaceOwner,
+      title: workspaces.title,
+      iconId: workspaces.iconId,
+      data: workspaces.data,
+      inTrash: workspaces.inTrash,
+      logo: workspaces.logo,
+      bannerUrl: workspaces.bannerUrl,
+    })
     .from(workspaces)
     .where(
       and(
@@ -76,7 +86,7 @@ export const getPrivateWorkspaces = async (userId: string) => {
         ),
         eq(workspaces.workspaceOwner, userId)
       )
-    );
+    ) as workspace[];
 
   return privateWorkspaces;
 };
@@ -86,13 +96,23 @@ export const getCollaboratingWorkspaces = async (userId: string) => {
   }
 
   const collaboratingWorkspaces = await db
-    .select()
+    .select({
+      id: workspaces.id,
+      createdAt: workspaces.createdAt,
+      workspaceOwner: workspaces.workspaceOwner,
+      title: workspaces.title,
+      iconId: workspaces.iconId,
+      data: workspaces.data,
+      inTrash: workspaces.inTrash,
+      logo: workspaces.logo,
+      bannerUrl: workspaces.bannerUrl,
+    })
     .from(users)
     .innerJoin(collaborators, eq(users.id, collaborators.userId))
     .innerJoin(workspaces, eq(collaborators.workspaceId, workspaces.id))
-    .where(eq(users.id, userId));
+    .where(eq(users.id, userId)) as workspace[];
 
-  return collaboratingWorkspaces;
+  return collaboratingWorkspaces ;
 };
 
 export const getSharedWorkspaces = async (userId: string) => {
@@ -101,11 +121,21 @@ export const getSharedWorkspaces = async (userId: string) => {
   }
 
   const sharedWorkspaces = await db
-    .select()
+    .select({
+      id: workspaces.id,
+      createdAt: workspaces.createdAt,
+      workspaceOwner: workspaces.workspaceOwner,
+      title: workspaces.title,
+      iconId: workspaces.iconId,
+      data: workspaces.data,
+      inTrash: workspaces.inTrash,
+      logo: workspaces.logo,
+      bannerUrl: workspaces.bannerUrl,
+    })
     .from(workspaces)
     .orderBy(workspaces.createdAt)
     .innerJoin(collaborators, eq(workspaces.id, collaborators.workspaceId))
-    .where(eq(workspaces.workspaceOwner, userId));
+    .where(eq(workspaces.workspaceOwner, userId)) as workspace[];
 
   return sharedWorkspaces;
 };

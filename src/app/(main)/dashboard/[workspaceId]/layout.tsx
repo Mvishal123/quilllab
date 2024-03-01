@@ -8,7 +8,7 @@ interface LayoutProps {
 const Layout = ({ children, params }: LayoutProps) => {
   return (
     <div className="flex overflow-hidden h-screen w-screen">
-      <Sidebar params={params} />
+      <Sidebar params={params} /> 
       <div className="dark:border-Neutrals/neutrals-11 border-l-[1px] w-full relative overflow-scroll">{children}</div>
     </div>
   );

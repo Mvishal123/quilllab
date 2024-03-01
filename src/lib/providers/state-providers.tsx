@@ -20,7 +20,17 @@ interface AppState {
   workspaces: appWorkspacesType[] | [];
 }
 
-type Action = { type: "ADD_WORKSPACE"; payload: appWorkspacesType };
+type Action =
+  | { type: "ADD_WORKSPACE"; payload: appWorkspacesType }
+  | { type: "DELETE_WORKSPACE"; payload: Partial<appWorkspacesType> }
+  | {
+      type: "UPDATE_WORKSPACE";
+      payload: { workspace: Partial<appWorkspacesType>; workspaceId: string };
+    }
+  | {
+      type: "SET_WORKSPACES";
+      payload: { workspaces: appWorkspacesType[] | [] };
+    };
 const initialState: AppState = { workspaces: [] };
 
 // Similar to redux -> State manager
@@ -33,6 +43,33 @@ const appReducer = (
       return {
         ...state,
         workspaces: [...state.workspaces, action.payload],
+      };
+    case "DELETE_WORKSPACE":
+      return {
+        ...state,
+        workspaces: state.workspaces.filter((workspaces) => {
+          workspaces.id !== action.payload;
+        }),
+      };
+    case "UPDATE_WORKSPACE":
+      return {
+        ...state,
+        workspaces: state.workspaces.map((workspace) => {
+          if (workspace.id === action.payload.workspaceId) {
+            return {
+              ...workspace,
+              ...action.payload.workspace,
+            };
+          }
+
+          return workspace;
+        }),
+      };
+
+    case "SET_WORKSPACES":
+      return {
+        ...state,
+        workspaces: action.payload.workspaces,
       };
     default:
       return initialState;
@@ -99,10 +136,10 @@ export default AppStateProvider;
 
 export const useAppState = () => {
   const context = useContext(AppStateContext);
-  
+
   if (!context) {
     throw new Error("useAppState must be used within an AppStateProvider");
   }
-  
+
   return context;
 };
